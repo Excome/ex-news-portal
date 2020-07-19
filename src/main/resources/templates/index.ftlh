@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as cmn>
+<#include "parts/security.ftlh">
 <@cmn.page>
-    <h1>Hello ${name}!</h1>
+    <h1>Здраствуй, ${name}</h1>
 </@cmn.page>

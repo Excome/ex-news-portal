@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     </head>
     <body>
+    <#include "navbar.ftlh">
     <div class="container-fluid mt-5 px-5">
         <#nested>
     </div>

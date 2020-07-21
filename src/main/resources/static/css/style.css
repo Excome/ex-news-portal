@@ -1,0 +1,23 @@
+body{
+    height: 100%;
+    width: 100%;
+    background: #f4f4f4;
+}
+
+.shadow-box-topic{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shadow-box{
+    background: white;
+    padding: 5%;
+    margin-top: 80px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.shadow-box-foot{
+    margin-top: 16px;
+    text-align: center;
+    padding: 15px 0;
+}

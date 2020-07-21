@@ -48,13 +48,19 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user){
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-
+        User userFromDb = userRepository.findByEmail(user.getEmail());
+        if(userFromDb != null){
+            return false;
+        }
+        userFromDb = userRepository.findByUsername(user.getUsername());
         if(userFromDb != null){
             return false;
         }
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setSurname("");
+        user.setName("");
+        user.setPatronymic("");
         userRepository.save(user);
 
         return true;

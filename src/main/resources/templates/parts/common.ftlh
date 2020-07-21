@@ -12,7 +12,7 @@
     </head>
     <body>
     <#include "navbar.ftlh">
-    <div class="container-fluid mt-5 px-5">
+    <div class="content container-xl mt-5">
         <#nested>
     </div>
     <!-- Optional JavaScript -->

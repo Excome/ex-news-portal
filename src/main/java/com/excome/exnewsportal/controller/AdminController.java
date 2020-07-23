@@ -26,7 +26,7 @@ public class AdminController {
 
     @GetMapping("ue/{userId}")
     public String userEdit(@PathVariable("userId") Long userId, Model model){
-        model.addAttribute("user", userService.findUserById(userId));
+        model.addAttribute("user", userService.getUserById(userId));
         model.addAttribute("roles", userService.getRoles());
 
         return "userEdit";
@@ -36,7 +36,7 @@ public class AdminController {
     public String updateUser(@RequestParam Map<String, String> form,
                              @RequestParam Long userId
     ){
-        userService.changeUser(form, userService.findUserById(userId));
+        userService.changeUser(form, userService.getUserById(userId));
 
         return "redirect:/admin";
     }

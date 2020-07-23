@@ -21,3 +21,13 @@ body{
     text-align: center;
     padding: 15px 0;
 }
+
+.button-link{
+    text-decoration: none;
+}
+
+.post-box-topic{
+    padding: 1.2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}

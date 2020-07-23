@@ -2,27 +2,38 @@ package com.excome.exnewsportal.domain;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String topic;
     private String text;
-    private List<String> tag;
+    private String tag;
     @ManyToOne
     private User author;
     @CreatedDate
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date createdDate;
     @LastModifiedDate
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date lastUpdatedDate;
 
     public Post() {
+    }
+
+    public String getShortText(){
+        return Arrays.toString(text.split(" ", 100));
     }
 
     public Long getId() {
@@ -49,11 +60,11 @@ public class Post {
         this.text = text;
     }
 
-    public List<String> getTag() {
+    public String getTag() {
         return tag;
     }
 
-    public void setTag(List<String> tag) {
+    public void setTag(String tag) {
         this.tag = tag;
     }
 

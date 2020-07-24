@@ -8,7 +8,7 @@
 
     <div class="collapse navbar-collapse container-xl">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/">Главная</a>
             </li>
             <li class="nav-item">
@@ -19,12 +19,6 @@
                     <a class="nav-link" href="/admin">Админ панель</a>
                 </li>
             </#if>
-            <li class="nav-item">
-                <form class="form-inline my-2 my-lg-0 ml-2">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Ввод..">
-                    <button class="btn btn-light my-2 my-sm-0" type="submit">Найти</button>
-                </form>
-            </li>
         </ul>
         <#if name != "Гость">
             <div class="navbar-text mr-3" style="color: white">

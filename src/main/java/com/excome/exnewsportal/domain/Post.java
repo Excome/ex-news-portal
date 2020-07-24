@@ -1,5 +1,6 @@
 package com.excome.exnewsportal.domain;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +19,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String topic;
+    @Column(columnDefinition = "TEXT")
     private String text;
     private String tag;
     @ManyToOne
@@ -33,7 +35,12 @@ public class Post {
     }
 
     public String getShortText(){
-        return Arrays.toString(text.split(" ", 100));
+        String[] s = text.split(" ");
+        String shortText = "";
+        for(int i=0; i< 100; i++){
+            shortText += s[i] + " ";
+        }
+        return shortText + "...";
     }
 
     public Long getId() {

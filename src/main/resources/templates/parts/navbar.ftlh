@@ -21,12 +21,19 @@
             </#if>
         </ul>
         <#if name != "Гость">
-            <div class="navbar-text mr-3" style="color: white">
-                ${name}
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ${name}
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/user/${user.username}">Профиль</a>
+                    <a class="dropdown-item" href="#">Посты</a>
+                    <div class="dropdown-divider"></div>
+                    <form action="/logout" method="post">
+                        <button type="submit" class="dropdown-item">Выход</button>
+                    </form>
+                </div>
             </div>
-            <form action="/logout" method="post">
-                <button type="submit" class="btn btn-light">Выход</button>
-            </form>
         <#else>
             <button type="submit" class="btn btn-light mr-2"><a href="/login"  style="text-decoration: none; color: black">Войти</a></button>
             <button type="submit" class="btn btn-light"><a href="/registration"  style="text-decoration: none; color: black">Регистрация</a></button>

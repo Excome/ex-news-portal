@@ -5,6 +5,19 @@ body{
     font-family: 'Fira Sans', sans-serif;
 }
 
+.admin-table{
+    background: white;
+    padding: 2%;
+    margin-bottom: 3%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: solid #3E3E3E 1px;
+}
+
+.admin-table-title{
+    margin-bottom: 2%;
+    text-align: center;
+}
+
 .posts-header{
     float:left;
     font-weight: bold;
@@ -15,7 +28,7 @@ body{
     margin-top: 0.5%;
 }
 
-.shadow-box-topic{
+.shadow-box-tittle{
     text-align: center;
     margin-bottom: 20px;
 }
@@ -41,10 +54,18 @@ body{
     margin-bottom: 3%;
 }
 
-.post-box-topic{
-    padding: 1.2%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+.post-box-tittle{
+    margin-bottom: 9px;
+}
+
+.post-box-title-link{
+    text-decoration: none;
+    color: black;
+}
+
+.post-box-title-link:hover{
+    color: #487284;
+    text-decoration: none;
 }
 
 .post-box-meta{
@@ -65,4 +86,28 @@ body{
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
+}
+
+.post-box-tag{
+    color: #5e6973;
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.post-info{
+    margin-top: 30%;
+    color: #505c66;
+    background: white;
+    padding: 20px;
+}
+
+.post-info-header{
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+}
+
+.post-info-list{
+    list-style: none;
+    font-size: 12px;
 }

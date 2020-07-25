@@ -7,7 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-4">
-            <form action="cngUser" method="post">
+            <form action="/admin/ue/${user.id}" method="get" name="userForm">
                 <div class="form-group">
                     <label for="email">Электронная почта</label>
                     <input type="email" name="email" class="form-control" value="${user.email}"  placeholder="name@example.com">
@@ -39,16 +39,14 @@
                         </div>
                     </#list>
                 </div>
-                <input type="hidden" name="userId" value="${user.id}">
                 <button type="submit" class="btn btn-primary" style="float: left">Сохранить</button>
             </form>
-            <form action="deleteUser" method="post">
-                <input type="hidden" name="userId" value="${user.id}">
+            <form action="/admin/ue/${user.id}/delete" method="post">
                 <button type="submit" class="btn btn-danger" style="float: right">Удалить</button>
             </form>
         </div>
         <div class="col-3 ml-5">
-            <form action="cngUserPass" method="post">
+            <form action="/admin/ue/${user.id}" method="post">
                 <div class="form-group">
                     <label for="password">Пароль</label>
                     <input type="password" name="password" class="form-control">
@@ -61,7 +59,6 @@
                     <label for="adminPassword">Пароль администратора</label>
                     <input type="password" name="adminPassword" class="form-control">
                 </div>
-                <input type="hidden" name="userId" value="${user.id}">
                 <button type="submit" class="btn btn-primary">Изменить пароль</button>
             </form>
         </div>

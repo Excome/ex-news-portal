@@ -1,14 +1,18 @@
 package com.excome.exnewsportal.domain;
 
-import org.hibernate.Session;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "usr")
 public class User implements UserDetails {
     @Id
@@ -25,6 +29,10 @@ public class User implements UserDetails {
     private String surname;
     private String name;
     private String patronymic;
+    private Date birthday;
+    @CreatedDate
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+    private Date regDate;
 
     public User() {
     }
@@ -135,5 +143,21 @@ public class User implements UserDetails {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birhday) {
+        this.birthday = birhday;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 }

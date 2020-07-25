@@ -3,7 +3,7 @@
 <@cmn.page>
     <div class="row justify-content-center">
         <div class="col" style="margin-bottom: 4%">
-            <h1 class="posts-header">Последние новости</h1>
+            <h3 class="posts-header">Последние новости</h3>
             <#if isAdmin><a class="posts-header-button btn btn-info" href="/post/new">Создать пост</a></#if>
         </div>
     </div>
@@ -15,14 +15,17 @@
                     <span class="post-time">${post.createdDate}</span>
                 </header>
                 <div class="post-box-tittle">
-                    <h2>${post.topic}</h2>
+                    <h1><a href="/post/${post.id}" title="${post.topic}" class="post-box-title-link">${post.topic}</a></h1>
+                </div>
+                <div class="post-box-tag">
+                    <span>${post.tag}</span>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col"
+                    <div class="col">
                         <#noautoesc>
-                            ${post.shortText}
+                            ${post.text}
                         </#noautoesc>
-                    <p><a href="/post/${post.id}" class="button-link btn btn-outline-info">Читать дальше →</a></p>
+                        <p><a href="/post/${post.id}" class="button-link btn btn-outline-info">Читать дальше →</a></p>
                     </div>
                 </div>
                 <hr>

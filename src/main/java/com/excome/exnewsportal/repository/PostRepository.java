@@ -19,4 +19,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true
     )
     List<Post> findLastPost();
+
+
+    @Query("select p from Post p where p.topic like %:topic%")
+    List<Post> findPostsByTopic(@Param("topic") String topic);
+
+    @Query("select p from Post p where p.author = : username order by p.createdDate desc")
+    List<Post> findUserPosts(@Param("username")String username);
 }

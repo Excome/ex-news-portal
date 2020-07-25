@@ -1,5 +1,6 @@
 package com.excome.exnewsportal.service;
 
+import com.excome.exnewsportal.domain.Post;
 import com.excome.exnewsportal.domain.Role;
 import com.excome.exnewsportal.domain.User;
 import com.excome.exnewsportal.repository.RoleRepository;
@@ -22,11 +23,13 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PostService postService;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PostService postService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.postService = postService;
     }
 
     @Override
@@ -122,5 +125,17 @@ public class UserService implements UserDetailsService {
             return true;
         }
         return false;
+    }
+
+    public List<User> getLastUsers() {
+        return userRepository.findLastUser();
+    }
+
+    public List<User> getUsersByUsername(String username) {
+        return userRepository.findUsersByUsername(username);
+    }
+
+    public List<Post> getUserPosts(String username){
+        return postService.getUserPosts(username);
     }
 }

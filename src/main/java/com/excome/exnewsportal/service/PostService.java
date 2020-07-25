@@ -36,4 +36,28 @@ public class PostService {
 
         return post;
     }
+
+    public boolean updatePost(Post postForm) {
+        Post postFromDb = postRepository.findPostById(postForm.getId());
+        if(postFromDb != null) {
+            postFromDb.setTopic(postForm.getTopic());
+            postFromDb.setText(postForm.getText());
+            postFromDb.setTag(postForm.getTag());
+            postRepository.save(postFromDb);
+            return true;
+        }
+        return false;
+    }
+
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
+    public List<Post> getPostsByTopic(String topic) {
+        return postRepository.findPostsByTopic(topic);
+    }
+
+    public List<Post> getUserPosts(String username){
+        return postRepository.findUserPosts(username);
+    }
 }

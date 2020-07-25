@@ -1,5 +1,6 @@
 package com.excome.exnewsportal.controller;
 
+import com.excome.exnewsportal.service.PostService;
 import com.excome.exnewsportal.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,49 +13,59 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
     private UserService userService;
+    private PostService postService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @GetMapping
-    public String userList(Model model){
-        model.addAttribute("userList", userService.getUsers());
+    public String admin(@RequestParam(required = false) String username,
+                        @RequestParam(required = false) String topic,
+                        Model model){
+        if(username !=null && !username.isEmpty()){
+            model.addAttribute("userList", userService.getUsersByUsername(username));
+        } else {
+            model.addAttribute("userList", userService.getLastUsers());
+        }
 
+        if(topic != null && !topic.isEmpty()){
+            model.addAttribute("postList", postService.getPostsByTopic(topic));
+        }else {
+            model.addAttribute("postList", postService.getLastPosts());
+        }
         return "admin";
     }
 
     @GetMapping("ue/{userId}")
-    public String userEdit(@PathVariable("userId") Long userId, Model model){
+    public String userEdit(@PathVariable("userId") Long userId,
+                           @RequestParam(required = false) Map<String, String> form,
+                           Model model){
+        if(form != null && !form.isEmpty()){
+            userService.changeUser(form, userService.getUserById(userId));
+        }
+
         model.addAttribute("user", userService.getUserById(userId));
         model.addAttribute("roles", userService.getRoles());
 
         return "userEdit";
     }
 
-    @PostMapping("ue/cngUser")
-    public String updateUser(@RequestParam Map<String, String> form,
-                             @RequestParam Long userId
-    ){
-        userService.changeUser(form, userService.getUserById(userId));
-
-        return "redirect:/admin";
-    }
-
-    @PostMapping("ue/cngUserPass")
+    @PostMapping("ue/{userId}")
     public String updateUserPass(
             @RequestParam Map<String, String> form,
-            @RequestParam Long userId,
+            @PathVariable Long userId,
             Principal principal
     ){
         userService.changeUserPass(form, userId, principal);
 
 
-        return "redirect:/admin";
+        return "redirect:/admin/ue/"+userId;
     }
 
-    @PostMapping("ue/deleteUser")
-    public String deleteUser(@RequestParam Long userId){
+    @PostMapping("ue/{userId}/delete")
+    public String deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
 
         return "redirect:/admin";

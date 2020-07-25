@@ -2,13 +2,9 @@ package com.excome.exnewsportal.controller;
 
 import com.excome.exnewsportal.domain.Post;
 import com.excome.exnewsportal.service.PostService;
-import com.excome.exnewsportal.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -49,5 +45,26 @@ public class PostController {
         return "redirect:/post/"+post.getId();
     }
 
+    @GetMapping("post/{postId}/edit")
+    public String postEdit(@PathVariable("postId") Long postId, Model model){
+        model.addAttribute(postService.getPostById(postId));
+
+        return "postEdit";
+    }
+
+    @PostMapping("post/{postId}/edit")
+    public String updatePost(@ModelAttribute("postForm") Post postForm,
+                             Model model){
+        postService.updatePost(postForm);
+
+        return "redirect:/post/{postId}";
+    }
+
+    @PostMapping("post/{postId}/delete")
+    public String deletePost(@RequestParam("postId") Long postId){
+        postService.deletePost(postId);
+
+        return "redirect:/";
+    }
 }
 

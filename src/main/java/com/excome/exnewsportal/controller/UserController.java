@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping("{username}")
     public String userProfile(@PathVariable String username, Model model){
-        model.addAttribute("user", userService.loadUserByUsername(username));
+        model.addAttribute("userProfile", userService.getUserByUsername(username));
         model.addAttribute("posts", userService.getUserPosts(username));
 
         return "userProfile";

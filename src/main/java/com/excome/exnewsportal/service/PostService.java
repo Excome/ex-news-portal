@@ -56,8 +56,4 @@ public class PostService {
     public List<Post> getPostsByTopic(String topic) {
         return postRepository.findPostsByTopic(topic);
     }
-
-    public List<Post> getUserPosts(String username){
-        return postRepository.findUserPosts(username);
-    }
 }

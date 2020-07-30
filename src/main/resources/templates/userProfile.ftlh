@@ -1,8 +1,9 @@
 <#import "parts/common.ftlh" as cmn>
+<#include "parts/security.ftlh">
 <@cmn.page>
     <div class="row justify-content-center">
         <div class="col">
-            <h3>Пользователь <span>${user.username}</span></h3>
+            <h3>Пользователь <span>${userProfile.username}</span></h3>
             <div class="user-profile-avatar">
                 <img src="#" alt="">
             </div>
@@ -10,23 +11,23 @@
                 <ul>
                     <li>
                         <h5>Фамилия</h5>
-                        <span>${user.surname}</span>
+                        <span>${userProfile.surname}</span>
                     </li>
                     <li>
                         <h5>Имя</h5>
-                        <span>${user.name}</span>
+                        <span>${userProfile.name}</span>
                     </li>
                     <li>
                         <h5>Отчество</h5>
-                        <span>${user.patronymic}</span>
+                        <span>${userProfile.patronymic}</span>
                     </li>
                     <li>
                         <h5>Дата рождения</h5>
-                        <span>${user.birthday}</span>
+                        <span>${userProfile.birthday}</span>
                     </li>
                     <li>
                         <h5>Дата регистрации</h5>
-                        <span>${user.regDate}</span>
+                        <span>${userProfile.regDate}</span>
                     </li>
                 </ul>
             </div>
@@ -39,19 +40,27 @@
                     <th scope="col">Заголовок</th>
                     <th scope="col">Автор</th>
                     <th scope="col">Дата создания</th>
-                    <th scope="col"></th>
+                    <#if userProfile.username == name>
+                        <th scope="col"></th>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody>
-                <#list posts as post>
-                    <tr>
-                        <td scope="row">${post.id}</td>
-                        <td>${post.topic}</td>
-                        <td><a href="/user/${post.author.id}">${post.author.username}</a></td>
-                        <th>${post.createdDate}</th>
-                        <td><a class="btn btn-link" href="/post/${post.id}/edit">Изменить</a></td>
-                    </tr>
-                </#list>
+                <#if posts?size != 0>
+                    <#list posts as post>
+                        <tr>
+                            <td scope="row">${post.id}</td>
+                            <td>${post.topic}</td>
+                            <td><a href="/user/${post.author.username}">${post.author.username}</a></td>
+                            <td>${post.createdDate}</td>
+                            <#if userProfile.username == name>
+                                <td><a class="btn btn-link" href="/post/${post.id}/edit">Изменить</a></td>
+                            </#if>
+                        </tr>
+                    </#list>
+                <#else>
+                    <tr><td colspan="4">Постов нет(</td></tr>
+                </#if>
                 </tbody>
             </table>
         </div>

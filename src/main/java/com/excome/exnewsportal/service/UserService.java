@@ -3,6 +3,7 @@ package com.excome.exnewsportal.service;
 import com.excome.exnewsportal.domain.Post;
 import com.excome.exnewsportal.domain.Role;
 import com.excome.exnewsportal.domain.User;
+import com.excome.exnewsportal.repository.PostRepository;
 import com.excome.exnewsportal.repository.RoleRepository;
 import com.excome.exnewsportal.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +24,13 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    private PostService postService;
+    private PostRepository postRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PostService postService) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.postService = postService;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -44,6 +45,10 @@ public class UserService implements UserDetailsService {
     public User getUserById(Long userId){
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.findUserByUsername(username);
     }
 
     public List<User> getUsers(){
@@ -136,6 +141,6 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Post> getUserPosts(String username){
-        return postService.getUserPosts(username);
+        return postRepository.findUserPosts(getUserByUsername(username));
     }
 }

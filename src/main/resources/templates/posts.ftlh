@@ -11,7 +11,7 @@
         <div class="post-box row justify-content-center">
             <div class="col">
                 <header class="post-box-meta">
-                    <a class="user-nickname" href="user/${post.author.id}" title="Автор публикации">${post.author.username}</a>
+                    <a class="user-nickname" href="user/${post.author.username}" title="Автор публикации">${post.author.username}</a>
                     <span class="post-time">${post.createdDate}</span>
                 </header>
                 <div class="post-box-tittle">

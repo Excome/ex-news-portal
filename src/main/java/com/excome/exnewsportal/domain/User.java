@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private String patronymic;
     private Date birthday;
     @CreatedDate
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date regDate;
 
     public User() {

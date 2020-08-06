@@ -1,7 +1,7 @@
 body{
     height: 100%;
     width: 100%;
-    background: #f4f4f4;
+    background: #fff;
     font-family: 'Fira Sans', sans-serif;
 }
 
@@ -107,7 +107,50 @@ body{
     text-align: center;
 }
 
+.post-info-button{
+    min-width: 100%;
+    min-height: 3em;
+}
+
 .post-info-list{
     list-style: none;
-    font-size: 12px;
+    font-size: 15px;
+    padding: 0;
+}
+
+.list-item-head{
+    font-size: 15px;
+    display: inline-block;
+    min-width: 80px;
+    text-align: left;
+}
+
+.list-item-content{
+    margin: 0;
+    display: inline-block;
+    text-align: right;
+}
+
+.user-profile-list{
+    list-style: none;
+    font-size: 20px;
+    padding: 0;
+}
+
+.user-profile-list-item{
+
+}
+
+.user-profile-list-item-head{
+    font-size: 20px;
+    display: inline-block;
+    min-width: 10em;
+    text-align: left;
+}
+
+.user-profile-list-item-content{
+    margin: 0 0 0 20px;
+    display: inline-block;
+    text-align: left;
+    width: 14em;
 }

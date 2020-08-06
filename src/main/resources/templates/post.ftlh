@@ -24,10 +24,10 @@
                 </header>
                 <#if name == post.author.username || isAdmin>
                     <div class="post-info-button">
-                        <a class="btn btn-outline-info" href="/post/${post.id}/edit">Редактировать</a>
+                        <a class="btn btn-outline-info" href="/post/${post.id}/edit" style="float: left">Редактировать</a>
                         <form action="/post/${post.id}/delete" method="post" onsubmit="return deleteCheck()">
                             <input type="hidden" name="postId" value="${post.id}">
-                            <button class="btn btn-danger" type="submit">Удалить</button>
+                            <button class="btn btn-danger" type="submit" style="float: right">Удалить</button>
                         </form>
                         <script>
                             function deleteCheck() {
@@ -43,17 +43,17 @@
                 </#if>
                 <ul class="post-info-list">
                     <li class="post-info-list-item">
-                        <h3>Автор</h3>
-                        <a class="user-nickname" href="/user/${post.author.username}"><span>${post.author.username}</span></a>
+                        <h3 class="list-item-head">Автор</h3>
+                        <a class="list-item-content user-nickname" href="/user/${post.author.username}"><span>${post.author.username}</span></a>
                     </li>
                     <li class="post-info-list-item">
-                        <h3>Дата создания</h3>
-                        <span>${post.createdDate}</span>
+                        <h3 class="list-item-head">Создано</h3>
+                        <span class="list-item-content">${post.createdDate}</span>
                     </li>
                     <#if post.createdDate != post.lastUpdatedDate>
                         <li class="post-info-list-item">
-                            <h3>Дата изменения</h3>
-                            <span>${post.lastUpdatedDate}</span>
+                            <h3 class="list-item-head">Изменено</h3>
+                            <span class="list-item-content">${post.lastUpdatedDate}</span>
                         </li>
                     </#if>
                 </ul>

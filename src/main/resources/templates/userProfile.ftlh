@@ -3,31 +3,36 @@
 <@cmn.page>
     <div class="row justify-content-center">
         <div class="col">
-            <h3>Пользователь <span>${userProfile.username}</span></h3>
+            <h3>Пользователь <span style="color: orange">${userProfile.username}</span></h3>
+            <#if name == userProfile.username>
+                <div><h4><a href="/auth/settings/profile">Редактировать профиль</a></h4></div>
+            </#if>
             <div class="user-profile-avatar">
                 <img src="#" alt="">
             </div>
             <div class="user-profile-info">
-                <ul>
-                    <li>
-                        <h5>Фамилия</h5>
-                        <span>${userProfile.surname}</span>
+                <ul class="user-profile-list">
+                    <li class="user-profile-list-item">
+                        <h3 class="user-profile-list-item-head">Фамилия</h3>
+                        <span class="user-profile-list-item-content">${userProfile.surname}</span>
                     </li>
-                    <li>
-                        <h5>Имя</h5>
-                        <span>${userProfile.name}</span>
+                    <li class="user-profile-list-item">
+                        <h3 class="user-profile-list-item-head">Имя</h3>
+                        <span class="user-profile-list-item-content">${userProfile.name}</span>
                     </li>
-                    <li>
-                        <h5>Отчество</h5>
-                        <span>${userProfile.patronymic}</span>
+                    <li class="user-profile-list-item">
+                        <h3 class="user-profile-list-item-head">Отчество</h3>
+                        <span class="user-profile-list-item-content">${userProfile.patronymic}</span>
                     </li>
-                    <li>
-                        <h5>Дата рождения</h5>
-                        <span>${userProfile.birthday}</span>
-                    </li>
-                    <li>
-                        <h5>Дата регистрации</h5>
-                        <span>${userProfile.regDate}</span>
+                    <#if userProfile.birthday??>
+                        <li class="user-profile-list-item">
+                            <h3 class="user-profile-list-item-head">Дата рождения</h3>
+                            <span class="user-profile-list-item-content">${userProfile.birthday?string('dd MMMM yyyy г.')}</span>
+                        </li>
+                    </#if>
+                    <li class="user-profile-list-item">
+                        <h3 class="user-profile-list-item-head">Дата регистрации</h3>
+                        <span class="user-profile-list-item-content">${userProfile.regDate?string('dd MMMM yyyy г.')}</span>
                     </li>
                 </ul>
             </div>
@@ -40,22 +45,16 @@
                     <th scope="col">Заголовок</th>
                     <th scope="col">Автор</th>
                     <th scope="col">Дата создания</th>
-                    <#if userProfile.username == name>
-                        <th scope="col"></th>
-                    </#if>
                 </tr>
                 </thead>
                 <tbody>
                 <#if posts?size != 0>
                     <#list posts as post>
                         <tr>
-                            <td scope="row">${post.id}</td>
-                            <td>${post.topic}</td>
+                            <td>${post.id}</td>
+                            <td><a href="/post/${post.id}">${post.topic}</a></td>
                             <td><a href="/user/${post.author.username}">${post.author.username}</a></td>
-                            <td>${post.createdDate}</td>
-                            <#if userProfile.username == name>
-                                <td><a class="btn btn-link" href="/post/${post.id}/edit">Изменить</a></td>
-                            </#if>
+                            <td>${post.createdDate?string('dd MMMM yyyy в hh:mm')}</td>
                         </tr>
                     </#list>
                 <#else>

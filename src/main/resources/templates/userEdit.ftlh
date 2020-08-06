@@ -1,4 +1,4 @@
-<#import "parts/common.ftlh" as cmn>
+    <#import "parts/common.ftlh" as cmn>
 <@cmn.page>
     <div class="row justify-content-center">
         <div class="col">

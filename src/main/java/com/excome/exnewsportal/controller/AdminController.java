@@ -1,5 +1,6 @@
 package com.excome.exnewsportal.controller;
 
+import com.excome.exnewsportal.service.AdminService;
 import com.excome.exnewsportal.service.PostService;
 import com.excome.exnewsportal.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class AdminController {
     private UserService userService;
     private PostService postService;
+    private AdminService adminService;
 
-    public AdminController(UserService userService, PostService postService) {
+    public AdminController(UserService userService, PostService postService, AdminService adminService) {
         this.userService = userService;
         this.postService = postService;
+        this.adminService = adminService;
     }
 
     @GetMapping
@@ -43,7 +46,7 @@ public class AdminController {
                            @RequestParam(required = false) Map<String, String> form,
                            Model model){
         if(form != null && !form.isEmpty()){
-            userService.changeUser(form, userService.getUserById(userId));
+            adminService.changeUser(form, userId);
         }
 
         model.addAttribute("user", userService.getUserById(userId));
@@ -53,12 +56,12 @@ public class AdminController {
     }
 
     @PostMapping("ue/{userId}")
-    public String updateUserPass(
+    public String userPassEdit(
             @RequestParam Map<String, String> form,
             @PathVariable Long userId,
             Principal principal
     ){
-        userService.changeUserPass(form, userId, principal);
+        adminService.changeUserPass(form, userId, principal);
 
 
         return "redirect:/admin/ue/"+userId;

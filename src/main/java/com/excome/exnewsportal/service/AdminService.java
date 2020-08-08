@@ -1,54 +1,69 @@
 package com.excome.exnewsportal.service;
 
+import com.excome.exnewsportal.domain.Post;
 import com.excome.exnewsportal.domain.Role;
 import com.excome.exnewsportal.domain.User;
+import com.excome.exnewsportal.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class AdminService {
     private final UserService userService;
+    private final UserRepository userRepository;
     private final PostService postService;
 
-    public AdminService(UserService userService, PostService postService) {
+    public AdminService(UserService userService, PostService postService, UserRepository userRepository) {
         this.userService = userService;
         this.postService = postService;
+        this.userRepository = userRepository;
     }
 
     public boolean changeUser(Map<String, String> userForm, Long userId) {
-        User user = userService.getUserById(userId);
-        if(user != null){
+        User user = getUserById(userId);
+        if(user == null){
             return false;
         }
-        Set<Role> roles = new HashSet<Role>(userService.getRoles());
+        Set<Role> roles = userService.getRoles();
         user.getRoles().clear();
-        for(String key : userForm.keySet()){
-            switch (key){
-                case "email": user.setEmail(userForm.get(key)); break;
-                case "username": user.setUsername(userForm.get(key)); break;
-                case "surname": user.setSurname(userForm.get(key)); break;
-                case "name": user.setName(userForm.get(key)); break;
-                case "patronymic": user.setPatronymic(userForm.get(key)); break;
+        for (Map.Entry<String, String> s : userForm.entrySet()) {
+            switch (s.getKey()) {
+                case "email":
+                    user.setEmail(s.getValue());
+                    break;
+                case "username":
+                    user.setUsername(s.getValue());
+                    break;
+                case "surname":
+                    user.setSurname(s.getValue());
+                    break;
+                case "name":
+                    user.setName(s.getValue());
+                    break;
+                case "patronymic":
+                    user.setPatronymic(s.getValue());
+                    break;
             }
-            if(key.contains("Role")){
-                for(Role role : roles){
-                    if(userForm.get(key).equals(role.getName())){
+            if (s.getKey().contains("Role")) {
+                for (Role role : roles) {
+                    if (userForm.get(s.getKey()).equals(role.getName())) {
                         user.getRoles().add(role);
                     }
                 }
-
             }
         }
-        return userService.saveUserRepository(user);
+        userRepository.save(user);
+        return true;
     }
 
     public boolean changeUserPass(Map<String, String> form, Long userId, Principal principal) {
-        User userFromDb = userService.getUserById(userId);
-        User admin = userService.getUserByUsername(principal.getName());
+        User userFromDb = getUserById(userId);
+        User admin = getUserByUsername(principal.getName());
         if(userFromDb != null && admin != null) {
             return false;
         }
@@ -57,9 +72,47 @@ public class AdminService {
         String adminPass = form.get("adminPassword");
         if(newPass.equals(newPassConf) && userService.bCryptPasswordEncoder.matches(adminPass, admin.getPassword())){
             userFromDb.setPassword(userService.bCryptPasswordEncoder.encode(newPass));
-            userService.saveUserRepository(userFromDb);
+            userRepository.save(userFromDb);
         }
         return true;
+    }
+
+    public boolean deleteUser(Long userId){
+        if(userRepository.findById(userId).isPresent()){
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
+    }
+
+
+    public User getUserById(Long userId){
+        Optional<User> userFromDb = userRepository.findById(userId);
+        return userFromDb.orElse(new User());
+    }
+
+    public User getUserByUsername(String username){
+        return userService.getUserByUsername(username);
+    }
+
+    public Set<Role> getRoles(){
+        return userService.getRoles();
+    }
+
+    public List<User> getLastUsers() {
+        return userRepository.findLastUser();
+    }
+
+    public List<User> getUsersByUsername(String username) {
+        return userRepository.findUsersByUsername(username);
+    }
+
+    public List<Post> getPostsByTopic(String topic){
+        return postService.getPostsByTopic(topic);
+    }
+
+    public List<Post> getLastPosts(){
+        return postService.getLastPosts();
     }
 }
 

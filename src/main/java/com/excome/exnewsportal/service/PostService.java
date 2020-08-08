@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class PostService {
-    private PostRepository postRepository;
-    private UserService userService;
+    private final PostRepository postRepository;
+    private final UserService userService;
 
     public PostService(PostRepository postRepository, UserService userService) {
         this.postRepository = postRepository;

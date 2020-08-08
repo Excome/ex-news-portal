@@ -35,14 +35,6 @@ public class UserService implements UserDetailsService {
         this.postRepository = postRepository;
     }
 
-    public boolean saveUserRepository(User user){
-        if(user != null){
-            userRepository.save(user);
-            return  true;
-        }
-        return false;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -52,18 +44,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User getUserById(Long userId){
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
-
     public User getUserByUsername(String username){
         return userRepository.findUserByUsername(username);
     }
 
-    public List<User> getUsers(){
-        return userRepository.findAll();
-    }
 
     public boolean saveUser(User user){
         User userFromDb = userRepository.findByEmail(user.getEmail());
@@ -88,28 +72,12 @@ public class UserService implements UserDetailsService {
         return new HashSet<Role>(roleRepository.findAll());
     }
 
-    public boolean deleteUser(Long userId){
-        if(userRepository.findById(userId).isPresent()){
-            userRepository.deleteById(userId);
-            return true;
-        }
-        return false;
-    }
-
-    public List<User> getLastUsers() {
-        return userRepository.findLastUser();
-    }
-
-    public List<User> getUsersByUsername(String username) {
-        return userRepository.findUsersByUsername(username);
-    }
-
     public List<Post> getUserPosts(String username){
-        return postRepository.findUserPosts(getUserByUsername(username));
+        return postRepository.findUserPosts((User)loadUserByUsername(username));
     }
 
     public boolean saveSettingsProfile(Principal principal, Map<String, String> form) {
-        User user = getUserByUsername(principal.getName());
+        User user = (User)loadUserByUsername(principal.getName());
         try {
             for (String key : form.keySet()) {
                 if(form.get(key) !=null){

@@ -48,8 +48,7 @@ public class UserController {
 
     @PostMapping("auth/settings/account/editPass")
     public String settingsAccountEditPass(Principal principal,
-                                          @RequestParam Map<String, String> passForm,
-                                          Model model){
+                                          @RequestParam Map<String, String> passForm,){
         if(passForm !=null && !passForm.isEmpty()){
             userService.changeUserPass(principal, passForm);
         }

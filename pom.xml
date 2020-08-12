@@ -10,9 +10,10 @@
 	</parent>
 	<groupId>com.excome</groupId>
 	<artifactId>exNewsPortal</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>exNewsPortal</name>
-	<description>This is try to create smpl news portal on Spring Framework</description>
+	<description>This is try to create smpl blog like habr on Spring Framework</description>
 
 	<properties>
 		<java.version>11</java.version>

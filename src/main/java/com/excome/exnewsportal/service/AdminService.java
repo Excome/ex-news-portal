@@ -64,7 +64,7 @@ public class AdminService {
     public boolean changeUserPass(Map<String, String> form, Long userId, Principal principal) {
         User userFromDb = getUserById(userId);
         User admin = getUserByUsername(principal.getName());
-        if(userFromDb != null && admin != null) {
+        if(userFromDb == null || admin == null) {
             return false;
         }
         String newPass = form.get("password");

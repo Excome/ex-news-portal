@@ -3,10 +3,7 @@ package com.excome.exnewsportal.controller;
 import com.excome.exnewsportal.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -38,5 +35,25 @@ public class UserController {
         model.addAttribute("user", userService.getUserByUsername(principal.getName()));
 
         return "settingsProfile";
+    }
+
+    @GetMapping("auth/settings/account")
+    public String settingsAccount(Principal principal,
+                                  Model model){
+        model.addAttribute("user", userService.getUserByUsername(principal.getName()));
+
+
+        return "settingsAccount";
+    }
+
+    @PostMapping("auth/settings/account/editPass")
+    public String settingsAccountEditPass(Principal principal,
+                                          @RequestParam Map<String, String> passForm,
+                                          Model model){
+        if(passForm !=null && !passForm.isEmpty()){
+            userService.changeUserPass(principal, passForm);
+        }
+
+        return "redirect:/auth/settings/account";
     }
 }

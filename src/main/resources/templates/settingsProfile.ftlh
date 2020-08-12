@@ -7,7 +7,7 @@
                     <a class="nav-link active" href="/auth/settings/profile">Профиль</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/auth/settings/acc">Аккаунт</a>
+                    <a class="nav-link" href="/auth/settings/account">Аккаунт</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">В разработке</a>

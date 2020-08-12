@@ -108,4 +108,19 @@ public class UserService implements UserDetailsService {
             return false;
         }
     }
+
+    public boolean changeUserPass(Principal principal, Map<String, String> passForm) {
+        User user = getUserByUsername(principal.getName());
+        if(user == null) {
+            return false;
+        }
+        String currentPass = passForm.get("currentPassword");
+        String newPass = passForm.get("password");
+        String newPassConf = passForm.get("passwordConfirm");
+        if(newPass.equals(newPassConf) && bCryptPasswordEncoder.matches(currentPass, user.getPassword())){
+            user.setPassword(bCryptPasswordEncoder.encode(newPass));
+            userRepository.save(user);
+        }
+        return true;
+    }
 }
